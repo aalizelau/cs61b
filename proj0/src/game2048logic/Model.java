@@ -84,9 +84,13 @@ public class Model {
      *  Empty spaces are stored as null.
      * */
     public boolean emptySpaceExists() {
-        // TODO: Task 2. Fill in this function.
-        return false;
-    }
+        int size = board.size();
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                Tile tile = board.tile(x, y);
+                return false;
+            }
+        }
 
     /**
      * Returns true if any tile is equal to the maximum valid value.
