@@ -89,6 +89,7 @@ public class Model {
             for (int y = 0; y < size; y++) {
                 Tile tile = board.tile(x, y);
                 return false;
+        if
             }
         }
 
