@@ -124,7 +124,39 @@ public class Model {
      * 2. There are two adjacent tiles with the same value.
      */
     public boolean atLeastOneMoveExists() {
-        // TODO: Fill in this function.
+        if (emptySpaceExists()) {
+            return true;
+        }
+        int size = board.size();
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                Tile currenttile = board.tile(x, y);
+                if (y + 1 < size) {
+                    Tile topneighbour = board.tile(x, y + 1);
+                    if (currenttile.value() == topneighbour.value()) {
+                        return true;
+                    }
+                }
+                if (y - 1 >= 0) {
+                    Tile downneighbour = board.tile(x, y - 1);
+                    if (currenttile.value() == downneighbour.value()) {
+                        return true;
+                    }
+                }
+                if (x + 1 < size) {
+                    Tile rightneighbour = board.tile(x + 1, y);
+                    if (currenttile.value() == rightneighbour.value()) {
+                        return true;
+                    }
+                }
+                if (x - 1 >= 0) {
+                    Tile leftneighbour = board.tile(x - 1, y);
+                    if (currenttile.value() == leftneighbour.value()) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -147,8 +179,17 @@ public class Model {
         int myValue = currTile.value();
         int targetY = y;
 
-        // TODO: Tasks 5, 6, and 10. Fill in this function.
+        for (int i = y + 1; i < board.size(); i++) {
+            Tile maybetile = board.tile(x, i);
+            if (maybetile == null || maybetile.value() == myValue ) {
+                targetY = i;
+            } else {
+                break;
+            }
+        }
+        board.move(x, targetY, currTile);
     }
+        // TODO: Tasks 5, 6, and 10. Fill in this function.
 
     /** Handles the movements of the tilt in column x of the board
      * by moving every tile in the column as far up as possible.
