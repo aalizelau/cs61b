@@ -87,11 +87,14 @@ public class Model {
         int size = board.size();
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                Tile tile = board.tile(x, y);
-                return false;
-        if xxxx
+                Tile maybetile = board.tile(x, y);
+                if(maybetile == null){
+                    return true;
+                }
             }
         }
+        return false;
+    }
 
     /**
      * Returns true if any tile is equal to the maximum valid value.
@@ -99,7 +102,18 @@ public class Model {
      * given a Tile object t, we get its value with t.value().
      */
     public boolean maxTileExists() {
-        // TODO: Task 3. Fill in this function.
+        int size = board.size();
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                Tile maybetile = board.tile(x, y);
+                if (maybetile != null){
+                    int maybemax = maybetile.value();
+                    if (maybemax == MAX_PIECE) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
