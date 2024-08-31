@@ -3,8 +3,8 @@ import java.util.List;
 
 public class LinkedListDeque61B<T> implements Deque61B<T> {
     //instance variable
-    private Node sentinel;
-    private int size;
+    public Node sentinel;
+    public int size;
 
     //nested Node class
     public class Node{
@@ -12,7 +12,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         public T item;
         public Node next;
 
-        public Node(T item, Node prev, Node next) {
+        public Node(Node prev, T item, Node next) {
             this.prev = prev;
             this.item = item;
             this.next = next;
@@ -29,12 +29,18 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public void addFirst(T x) {
-
+        Node newNode = new Node(sentinel, x, sentinel.next);
+        sentinel.next.prev = newNode;
+        sentinel.next = newNode;
+        size ++;
     }
 
     @Override
     public void addLast(T x) {
-
+        Node newNode = new Node(sentinel.prev, x, sentinel);
+        sentinel.prev.next = newNode;
+        sentinel.prev = newNode;
+        size ++;
     }
 
     @Override
