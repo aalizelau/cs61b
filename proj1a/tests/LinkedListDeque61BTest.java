@@ -61,12 +61,21 @@ public class LinkedListDeque61BTest {
     public void EmptyAndSizeTest(){
          Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
          assertThat(lld1.isEmpty()).isTrue();
-        assertThat(lld1.size()).isEqualTo(0);
+         assertThat(lld1.size()).isEqualTo(0);
 
          lld1.addLast(0);
          lld1.addFirst(1);
          assertThat(lld1.isEmpty()).isFalse();
          assertThat(lld1.size()).isEqualTo(2);
+    }
 
+    @Test
+    public void GetTest(){
+         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+         assertThat(lld1.get(0)).isNull();
+         lld1.addFirst(1);
+         assertThat(lld1.get(0)).isEqualTo(1);
+         assertThat(lld1.get(500)).isNull();
+         assertThat(lld1.get(-1)).isNull();
     }
 }
