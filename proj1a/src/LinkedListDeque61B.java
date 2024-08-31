@@ -1,5 +1,6 @@
 import java.util.Deque;
 import java.util.List;
+import java.util.ArrayList;
 
 public class LinkedListDeque61B<T> implements Deque61B<T> {
     //instance variable
@@ -45,17 +46,23 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public List<T> toList() {
-        return List.of();
+        List<T> returnList = new ArrayList<>();
+        Node p = sentinel;
+        for (int i = 0; i < size; i++) {
+            returnList.add(p.next.item);
+            p = p.next;
+        }
+        return returnList;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size==0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
