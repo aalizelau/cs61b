@@ -122,7 +122,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         }
         return getRecursiveHelper(sentinel.next, index);
     }
-
+    //helper method
     private T getRecursiveHelper(Node current, int index){
         if (index ==0){
             return current.item;
