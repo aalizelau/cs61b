@@ -78,4 +78,34 @@ public class LinkedListDeque61BTest {
          assertThat(lld1.get(500)).isNull();
          assertThat(lld1.get(-1)).isNull();
     }
+
+    @Test
+    public void getRecursiveTest(){
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        assertThat(lld1.get(0)).isNull();
+        lld1.addFirst(1);
+        assertThat(lld1.get(0)).isEqualTo(1);
+        assertThat(lld1.get(500)).isNull();
+        assertThat(lld1.get(-1)).isNull();
+    }
+
+    @Test
+    public void removeFirstAndRemoveLastTest(){
+         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+         assertThat(lld1.removeLast()).isNull();
+         assertThat(lld1.removeFirst()).isNull();
+
+         lld1.addFirst(1);
+         lld1.addLast(2);
+         lld1.addLast(3);
+         lld1.addFirst(4);// List is [4, 1, 2, 3]
+
+         lld1.removeFirst(); //List becomes [1, 2, 3]
+         assertThat(lld1.removeFirst()).isEqualTo(1); //List becomes [2, 3]
+         assertThat(lld1.toList()).containsExactly(2, 3).inOrder();
+
+         lld1.removeLast(); //List becomes [2]
+         assertThat(lld1.removeLast()).isEqualTo(2); //List becomes []
+         assertThat(lld1.toList()).isEmpty();
+    }
 }
