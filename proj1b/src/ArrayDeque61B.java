@@ -16,15 +16,13 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         nextLast = 1;
     }
 
-    public void resize (int capacity){
-        T[] newArray= (T[]) new Object[capacity];
-        int oldIndex = nextFirst;
-        for (int i=0; i<size; i++){
-            oldIndex = (oldIndex + 1) % items.length;
-            newArray[i] = items[oldIndex];
+    public void resize(int capacity) {
+        T[] newArray = (T[]) new Object[capacity];
+        for (int i = 0; i < size; i++) {
+            newArray[i] = get(i); // Using the get method to retrieve elements
         }
         items = newArray;
-        nextFirst=capacity -1;
+        nextFirst = capacity - 1;
         nextLast = size;
     }
 
@@ -69,14 +67,42 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         return size;
     }
 
+    public int internalCapacity() {
+        return items.length;
+    }
+
     @Override
     public T removeFirst() {
-        return null;
+        if (this.isEmpty()){
+            return null;
+        }
+        if (items.length >15 && items.length * 0.25 > size){
+            resize(items.length/2);
+        }
+        int firstindex = Math.floorMod(nextFirst+1,items.length);
+        T deletedItem = items[firstindex];
+
+        items[firstindex] = null;
+        nextFirst = firstindex;
+        size--;
+        return deletedItem;
     }
 
     @Override
     public T removeLast() {
-        return null;
+        if (this.isEmpty()){
+            return null;
+        }
+        if (items.length >15 && items.length * 0.25 > size){
+            resize(items.length/2);
+        }
+        int lastIndex = Math.floorMod(nextLast-1,items.length);
+        T deletedItem = items[lastIndex];
+
+        items[lastIndex] = null;
+        nextLast = lastIndex;
+        size--;
+        return deletedItem;
     }
 
     @Override
@@ -84,11 +110,13 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         if (index >= size || index < 0) {
             return null;
         }
-        return items[index];
+        int actualIndex = Math.floorMod(nextFirst + 1 + index, items.length);
+        return items[actualIndex];
     }
 
     @Override
     public T getRecursive(int index) {
         return null;
     }
+
 }

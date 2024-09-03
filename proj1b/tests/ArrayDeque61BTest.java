@@ -34,4 +34,38 @@ public class ArrayDeque61BTest {
 
         assertThat(ad.toList()).containsExactly(5,0,1,2,3,4,5,6,7,2).inOrder();
     }
+
+    @Test
+    public void GetTest(){
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        assertThat(ad.get(0)).isNull();
+        ad.addFirst(1);
+        ad.addFirst(5);
+        assertThat(ad.get(0)).isEqualTo(5);
+        assertThat(ad.get(500)).isNull();
+        assertThat(ad.get(-1)).isNull();
+    }
+
+    @Test
+    public void removeFirstAndRemoveLastTest(){
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        assertThat(ad.removeLast()).isNull();
+        assertThat(ad.removeFirst()).isNull();
+
+        ad.addFirst(1);
+        ad.addLast(2);
+        ad.addLast(3);
+        ad.addFirst(4);// List is [4, 1, 2, 3]
+
+        ad.removeFirst(); //List becomes [1, 2, 3]
+        assertThat(ad.removeFirst()).isEqualTo(1); //List becomes [2, 3]
+        assertThat(ad.toList()).containsExactly(2, 3).inOrder();
+
+        ad.removeLast(); //List becomes [2]
+        assertThat(ad.removeLast()).isEqualTo(2); //List becomes []
+        assertThat(ad.toList()).isEmpty();
+    }
+
+
+
 }
