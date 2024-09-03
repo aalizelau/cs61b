@@ -1,6 +1,7 @@
 import java.util.Deque;
 import java.util.List;
 import java.lang.Math;
+import java.util.ArrayList;
 
 public class ArrayDeque61B<T> implements Deque61B<T>{
     public T[] items;
@@ -11,14 +12,20 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
     public ArrayDeque61B() {
         items = (T[]) new Object[8];
         size = 0;
-        nextFirst = 4;
-        nextLast = 4;
+        nextFirst = 0;
+        nextLast = 1;
     }
 
     public void resize (int capacity){
         T[] newArray= (T[]) new Object[capacity];
-        System.arraycopy(items, 0, newArray, 0, size);
+        int oldIndex = nextFirst;
+        for (int i=0; i<size; i++){
+            oldIndex = (oldIndex + 1) % items.length;
+            newArray[i] = items[oldIndex];
+        }
         items = newArray;
+        nextFirst=capacity -1;
+        nextLast = size;
     }
 
     @Override
@@ -43,17 +50,23 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
 
     @Override
     public List<T> toList() {
-        return List.of();
+        List<T> returnList = new ArrayList<>();
+        int index = Math.floorMod(nextFirst+1,items.length);
+        for (int i = 0; i < size; i++) {
+            returnList.add(items[index]);
+            index = Math.floorMod(index+1,items.length);
+        }
+        return returnList;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size==0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
@@ -68,7 +81,10 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
 
     @Override
     public T get(int index) {
-        return null;
+        if (index >= size || index < 0) {
+            return null;
+        }
+        return items[index];
     }
 
     @Override
