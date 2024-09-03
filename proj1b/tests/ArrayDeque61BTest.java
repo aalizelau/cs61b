@@ -65,7 +65,25 @@ public class ArrayDeque61BTest {
         assertThat(ad.removeLast()).isEqualTo(2); //List becomes []
         assertThat(ad.toList()).isEmpty();
     }
+    @Test
+    public void resizeTest(){
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        assertThat(((ArrayDeque61B<Integer>) ad).internalCapacity()).isEqualTo(8);
 
+        for (int i = 0; i < 16; i++) {
+            ad.addLast(i);
+        }
+        assertThat(((ArrayDeque61B<Integer>) ad).internalCapacity()).isEqualTo(16);
+
+        for (int i = 0; i < 13; i++) {
+            ad.removeFirst();
+        }
+        assertThat(ad.size()).isEqualTo(3);
+
+        if (ad.size() >=16) {
+            assertThat(((ArrayDeque61B<Integer>) ad).internalCapacity()).isEqualTo(8);
+        }
+    }
 
 
 }
