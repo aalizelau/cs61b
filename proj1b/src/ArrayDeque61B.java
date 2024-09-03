@@ -15,8 +15,17 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         nextLast = 4;
     }
 
+    public void resize (int capacity){
+        T[] newArray= (T[]) new Object[capacity];
+        System.arraycopy(items, 0, newArray, 0, size);
+        items = newArray;
+    }
+
     @Override
     public void addFirst(T x) {
+        if (size == items.length){
+            resize(items.length *2);
+        }
         items[nextFirst]=x;
         nextFirst = Math.floorMod(nextFirst-1,items.length);
         size++;
@@ -24,6 +33,9 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
 
     @Override
     public void addLast(T x) {
+        if (size == items.length){
+            resize(items.length *2);
+        }
         items[nextLast]=x;
         nextLast = Math.floorMod(nextLast+1,items.length);
         size++;

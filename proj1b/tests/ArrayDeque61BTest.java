@@ -19,5 +19,19 @@ public class ArrayDeque61BTest {
 //
 //         assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
 //     }
+    public void addFirstAndAddLastTest() {
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        for (int i=0; i<8; i++){
+            ad.addLast(i);
+        }
+        assertThat(ad.length).isEqualTo(8);
+        assertThat(ad.size()).isEqualTo(8);
 
+        ad.addLast(2);
+        ad.addFirst(5);
+        assertThat(ad.length).isEqualTo(16);
+        assertThat(ad.size()).isEqualTo(10);
+
+        assertThat(ad.toList()).containsExactly(5,0,1,2,3,4,5,6,7,2).inOrder();
+    }
 }
