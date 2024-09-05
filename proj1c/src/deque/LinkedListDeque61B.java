@@ -1,9 +1,6 @@
 package deque;
 
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 public class LinkedListDeque61B<T> implements Deque61B<T> {
     //instance variable
@@ -12,7 +9,29 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator<T>{
+        private int currentIndex;
+
+        public LinkedListIterator(){
+            currentIndex = 0;
+        }
+        @Override
+        public boolean hasNext() {
+            return currentIndex<size;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+            T returnItem = get(currentIndex);
+            currentIndex += 1;
+            return returnItem;
+        }
     }
 
     //nested Node class

@@ -1,10 +1,7 @@
 package deque;
 
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.lang.Math;
-import java.util.ArrayList;
 
 public class ArrayDeque61B<T> implements Deque61B<T>{
     public T[] items;
@@ -124,7 +121,34 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ArrayDequeIterator();
+    }
+
+    private class ArrayDequeIterator implements Iterator<T>{
+        private int currentIndex;
+
+        public ArrayDequeIterator(){
+            currentIndex = 0;
+        }
+        @Override
+        public boolean hasNext() {
+            return currentIndex < size;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+            T returnItem = get(currentIndex);
+            currentIndex += 1;
+            return returnItem;
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+
     }
 }
 
