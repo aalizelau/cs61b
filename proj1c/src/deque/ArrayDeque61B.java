@@ -148,7 +148,25 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
 
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other instanceof ArrayDeque61B otherDeque) {
+            if (this.size != otherDeque.size) {
+                return false;
+            }
 
+            Iterator<T> thisIterator = this.iterator();
+            Iterator<?> otherIterator = ((ArrayDeque61B<?>) other).iterator();
+
+            while (thisIterator.hasNext() && otherIterator.hasNext()) {
+                if (!thisIterator.next().equals(otherIterator.next())) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }
 
