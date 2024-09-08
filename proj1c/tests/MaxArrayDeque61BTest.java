@@ -22,3 +22,4 @@ public class MaxArrayDeque61BTest {
         assertThat(mad.max()).isEqualTo("fury road");
     }
 }
+
