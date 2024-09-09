@@ -45,8 +45,10 @@ public class UnionFind {
         if (parent(v)<0){
             return v;
         }
-        Set[v] = find(parent(v));
-        return parent(v);
+        else{
+            Set[v] = find(parent(v));
+            return Set[v];
+        }
     }
 
     /* Connects two items V1 and V2 together by connecting their respective
@@ -55,14 +57,19 @@ public class UnionFind {
        root to V2's root. Union-ing an item with itself or items that are
        already connected should not change the structure. */
     public void union(int v1, int v2) {
-        // TODO: YOUR CODE HERE
         int r1= find(v1); int r2=find(v2);
-        if (r1<=r2){
-            Set[v2]= Set[v2]- Set[v1];
-            Set[v1]=r2;
+
+        if (r1 == r2) {
+            return;
         }
-        Set[v1]= Set[v1]- Set[v2];
-        Set[v2]=r1;
+        if (Set[r1]>=Set[r2]){
+            Set[r2]= Set[r2]+ Set[r1]; //Update size of root2
+            Set[r1]=r2; //Make root1 a child of root2
+        }
+        else{
+            Set[r1]= Set[r1]+ Set[r2];
+            Set[r2]=r1;
+        }
     }
 
 }
