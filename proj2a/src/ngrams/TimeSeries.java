@@ -1,7 +1,6 @@
 package ngrams;
 
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * An object for mapping a year number (e.g. 1996) to numerical data. Provides
@@ -30,7 +29,9 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
-        // TODO: Fill in this constructor.
+        for (int i=startYear; i<=endYear; i++){
+            this.put(i, ts.get(i));
+        }
     }
 
     /**
@@ -38,7 +39,8 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Integer> years() {
         // TODO: Fill in this method.
-        return null;
+        Set<Integer> allkeys = this.keySet();
+        return new ArrayList<>(allkeys);
     }
 
     /**
@@ -47,7 +49,8 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Double> data() {
         // TODO: Fill in this method.
-        return null;
+        Collection<Double> allvalues = this.values();
+        return new ArrayList<>(allvalues);
     }
 
     /**
@@ -61,7 +64,21 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries plus(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries addedTimeseries = new TimeSeries();
+
+        for (Integer year : this.keySet()) {
+            double value = this.get(year);
+            if (ts.containsKey(year)) {
+                value += ts.get(year);
+            }
+            addedTimeseries.put(year, value);
+        }
+        for (Integer year : ts.keySet()) {
+            if (!this.containsKey(year)) {
+                addedTimeseries.put(year, ts.get(year));
+            }
+        }
+        return addedTimeseries;
     }
 
     /**
@@ -75,9 +92,18 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries dividedBy(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
-    }
+        TimeSeries dividedTimeseries = new TimeSeries();
 
-    // TODO: Add any private helper methods.
-    // TODO: Remove all TODO comments before submitting.
+        for (Integer year : this.keySet()) {
+            double value = this.get(year);
+            if (ts.containsKey(year)) {
+                value = value/ts.get(year);
+            }
+            else{
+                throw new IllegalArgumentException();
+            }
+            dividedTimeseries.put(year, value);
+        }
+        return dividedTimeseries;
+    }
 }

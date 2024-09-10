@@ -1,5 +1,6 @@
 import ngrams.TimeSeries;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -55,4 +56,33 @@ public class TimeSeriesTest {
         assertThat(totalPopulation.years()).isEmpty();
         assertThat(totalPopulation.data()).isEmpty();
     }
+    @Test
+    public void testDividedBy() {
+        // Create two TimeSeries objects
+        TimeSeries ts1 = new TimeSeries();
+        TimeSeries ts2 = new TimeSeries();
+
+        // Add some values to ts1
+        ts1.put(2000, 100.0);
+        ts1.put(2001, 150.0);
+        ts1.put(2002, 200.0);
+
+        // Add corresponding values to ts2
+        ts2.put(2000, 10.0);
+        ts2.put(2001, 30.0);
+        ts2.put(2002, 50.0);
+
+        // Expected result after division (ts1 / ts2)
+        TimeSeries expected = new TimeSeries();
+        expected.put(2000, 10.0);  // 100 / 10 = 10
+        expected.put(2001, 5.0);   // 150 / 30 = 5
+        expected.put(2002, 4.0);   // 200 / 50 = 4
+
+        // Perform the dividedBy operation
+        TimeSeries result = ts1.dividedBy(ts2);
+
+        // Check that the result is as expected
+        Assertions.assertEquals(expected, result);
+    }
+
 } 
