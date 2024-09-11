@@ -30,7 +30,9 @@ public class TimeSeries extends TreeMap<Integer, Double> {
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
         for (int i=startYear; i<=endYear; i++){
-            this.put(i, ts.get(i));
+            if (ts.containsKey(i)){
+                this.put(i, ts.get(i));
+            }
         }
     }
 
@@ -38,7 +40,6 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * Returns all years for this TimeSeries (in any order).
      */
     public List<Integer> years() {
-        // TODO: Fill in this method.
         Set<Integer> allkeys = this.keySet();
         return new ArrayList<>(allkeys);
     }
@@ -48,7 +49,6 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * Must be in the same order as years().
      */
     public List<Double> data() {
-        // TODO: Fill in this method.
         Collection<Double> allvalues = this.values();
         return new ArrayList<>(allvalues);
     }
@@ -63,7 +63,6 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * should store the value from the TimeSeries that contains that year.
      */
     public TimeSeries plus(TimeSeries ts) {
-        // TODO: Fill in this method.
         TimeSeries addedTimeseries = new TimeSeries();
 
         for (Integer year : this.keySet()) {
@@ -91,18 +90,15 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * If TS has a year that is not in this TimeSeries, ignore it.
      */
     public TimeSeries dividedBy(TimeSeries ts) {
-        // TODO: Fill in this method.
         TimeSeries dividedTimeseries = new TimeSeries();
 
         for (Integer year : this.keySet()) {
-            double value = this.get(year);
-            if (ts.containsKey(year)) {
-                value = value/ts.get(year);
-            }
-            else{
+            Double value = this.get(year);
+            Double divisor = ts.get(year);
+            if (value == null || divisor == null) {
                 throw new IllegalArgumentException();
             }
-            dividedTimeseries.put(year, value);
+            dividedTimeseries.put(year, value / divisor);
         }
         return dividedTimeseries;
     }

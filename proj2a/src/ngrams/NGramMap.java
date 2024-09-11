@@ -70,10 +70,10 @@ public class NGramMap {
      * returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
-        if (!wordMap.containsKey(word)){
+        TimeSeries oldtimeseries= this.wordMap.get(word);
+        if (oldtimeseries == null) {
             return new TimeSeries();
         }
-        TimeSeries oldtimeseries= this.wordMap.get(word);
         return new TimeSeries(oldtimeseries, startYear,endYear);
     }
 
@@ -84,10 +84,10 @@ public class NGramMap {
      * is not in the data files, returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word) {
-        if (!wordMap.containsKey(word)){
+        TimeSeries oldtimeseries= this.wordMap.get(word);
+        if (oldtimeseries == null) {
             return new TimeSeries();
         }
-        TimeSeries oldtimeseries= this.wordMap.get(word);
         return new TimeSeries(oldtimeseries, MIN_YEAR, MAX_YEAR);
     }
 

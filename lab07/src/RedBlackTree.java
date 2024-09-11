@@ -50,7 +50,8 @@ public class RedBlackTree<T extends Comparable<T>> {
      * @param node
      */
     void flipColors(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
+        node.isBlack = isRed(node);
+        node.left =
     }
 
     /**

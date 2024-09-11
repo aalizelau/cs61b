@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static ngrams.TimeSeries.MAX_YEAR;
+import static ngrams.TimeSeries.MIN_YEAR;
 import static utils.Utils.*;
 import static com.google.common.truth.Truth.assertThat;
 
@@ -22,7 +24,7 @@ public class NGramMapTest {
         List<Double> expectedCounts = new ArrayList<>
                 (Arrays.asList(646179.0, 677820.0, 697645.0, 795265.0));
 
-        TimeSeries request2005to2008 = ngm.countHistory("request");
+        TimeSeries request2005to2008 = ngm.countHistory("request",2005, 2008);
         assertThat(request2005to2008.years()).isEqualTo(expectedYears);
 
         for (int i = 0; i < expectedCounts.size(); i += 1) {
@@ -71,6 +73,15 @@ public class NGramMapTest {
 
         double expectedFishPlusDogWeight1865 = (136497.0 + 75819.0) / 2563919231.0;
         assertThat(fishPlusDogWeight.get(1865)).isWithin(1E-10).of(expectedFishPlusDogWeight1865);
+    }
+    @Test
+    public void testMissingWord() {
+        NGramMap ngm = new NGramMap(SHORT_WORDS_FILE, TOTAL_COUNTS_FILE);
+
+        // Query for a word that doesn't exist.
+        TimeSeries nonExistentWord = ngm.countHistory("nonexistentword", 2000, 2010);
+        assertThat(nonExistentWord.years()).isEmpty();
+        assertThat(nonExistentWord.data()).isEmpty();
     }
 
 }  
