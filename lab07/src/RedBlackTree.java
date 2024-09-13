@@ -136,6 +136,9 @@ public class RedBlackTree<T extends Comparable<T>> {
         else if(cmp > 0) {
             node.right = insert(node.right, item);
         }
+        else{
+            return node;
+        }
 
         //violation handling
         if (isRed(node.right) && !isRed(node.left)) {
@@ -146,6 +149,7 @@ public class RedBlackTree<T extends Comparable<T>> {
         }
         if (isRed(node.left) && isRed(node.left.left)) {
             node = rotateRight(node);
+            flipColors(node);
         }
         return node;
     }
