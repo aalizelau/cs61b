@@ -18,11 +18,11 @@ public class HyponymsHandler extends NgordnetQueryHandler {
 
         if (words.size() == 1) {
             String word = words.get(0);
-            List<String> hypernym = wn.sortedHypernym(wn.hypernym(word));
-            return "[" + String.join(", ", hypernym) + "]";
+            List<String> hyponym = wn.sortedHyponym(wn.hyponym(word));
+            return "[" + String.join(", ", hyponym) + "]";
         }
         else{
-            List<String> commonHyponyms = wn.commonHyponyms(words);
+            List<String> commonHyponyms = wn.sortedHyponym(wn.commonHyponym(words));
             return "[" + String.join(", ", commonHyponyms) + "]";
         }
     }
