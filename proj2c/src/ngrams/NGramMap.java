@@ -2,9 +2,7 @@ package ngrams;
 
 import edu.princeton.cs.algs4.In;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static ngrams.TimeSeries.MAX_YEAR;
 import static ngrams.TimeSeries.MIN_YEAR;
@@ -157,5 +155,37 @@ public class NGramMap {
         }
         return result;
     }
+
+    public Map summedCount(Collection<String> words, int startYear, int endYear){
+        Map<String, Double> summedcount = new HashMap<>();
+
+        for (String word : words) {
+            // Retrieve the count history for the word over the specified years
+            TimeSeries wordTimeSeries = countHistory(word, startYear, endYear);
+            double sum = 0.0;
+
+            // Sum the frequencies for the years in the given range
+            for (Double count : wordTimeSeries.values()) {
+                sum += count;
+            }
+            summedcount.put(word, sum);
+        }
+        return summedcount;
+    }
+
+    static class ValueComparator implements Comparator<Map.Entry<String, Double>> {
+        @Override
+        public int compare(Map.Entry<String, Double> a, Map.Entry<String, Double> b) {
+            return Double.compare(b.getValue(), a.getValue()); // Descending order
+        }
+    }
+
+    public PriorityQueue<Map.Entry<String, Double>> topHyponym(Map<String, Double> unsortedmap){
+        PriorityQueue<Map.Entry<String, Double>> pq = new PriorityQueue<>(new ValueComparator());
+        pq.addAll(unsortedmap.entrySet());
+
+        return pq;
+    }
+
 
 }
