@@ -2,6 +2,7 @@ package main;
 
 import browser.NgordnetServer;
 import org.slf4j.LoggerFactory;
+import wordnet.WordNet;
 
 public class Main {
     static {

@@ -1,4 +1,4 @@
-package main;
+package wordnet;
 
 import edu.princeton.cs.algs4.In;
 

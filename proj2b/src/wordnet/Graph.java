@@ -1,4 +1,4 @@
-package main;
+package wordnet;
 
 import java.util.*;
 
