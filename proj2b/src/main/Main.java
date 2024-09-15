@@ -10,8 +10,10 @@ public class Main {
     public static void main(String[] args) {
         NgordnetServer hns = new NgordnetServer();
 
-        String synsetFile = "./data/wordnet/synsets.txt";
-        String hyponymFile = "./data/wordnet/hyponyms.txt";
+        String synsetFile = "./proj2b/data/wordnet/synsets16.txt";
+        String hyponymFile = "./proj2b/data/wordnet/hyponyms16.txt";
+
+        WordNet wn = new WordNet(synsetFile,hyponymFile);
 
         hns.startUp();
         hns.register("history", new DummyHistoryHandler());

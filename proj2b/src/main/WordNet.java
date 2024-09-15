@@ -9,11 +9,11 @@ public class WordNet {
     private Map<Integer, String[]> wordMap;
 
     public WordNet(String synsetFilename, String hyponymFilename){
+        wordMap = new HashMap<>();
         int lineCount = loadSynsetFile(synsetFilename);
-        loadHyponymFile(hyponymFilename);
 
         graph = new Graph(lineCount);
-        wordMap = new HashMap<>();
+        loadHyponymFile(hyponymFilename);
     }
 
     private void loadHyponymFile(String hyponymFilename) {
