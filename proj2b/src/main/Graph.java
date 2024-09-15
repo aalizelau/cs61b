@@ -1,8 +1,6 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Graph {
     private final int VERTEXNO;
@@ -34,36 +32,23 @@ public class Graph {
         return VERTEXNO;
     }
 
-    public void DepthFirstPaths(int source) {
-        marked = new boolean[VERTEXNO]; // assuming Graph has a method vertex() to get the number of vertices
-        edgeTo = new int[VERTEXNO];
-        this.source = source;
-        dfsHelper(source);
-    }
+    public Set<Integer> visitedNodes(int synsetID) {
+        Set<Integer> visited = new HashSet<>();
+        Stack<Integer> stack = new Stack<>();
+        stack.push(synsetID);
 
-    private void dfsHelper(int v) {
-        marked[v] = true;
-        for (int w : neighbor(v)) {
-            if (!marked[w]) {
-                edgeTo[w] = v;
-                dfsHelper(w);
+        while (!stack.isEmpty()) {
+            int current = stack.pop();
+            if (!visited.contains(current)) {
+                visited.add(current);
+                for (int neighbor : neighbor(current)) {
+                    stack.push(neighbor);
+                }
             }
         }
+        return visited;
     }
 
-    public boolean hasPathTo(int v) {
-        return marked[v];
-    }
 
-    public Iterable<Integer> pathTo(int v) {
-        if (!hasPathTo(v)) return null;  // No path if vertex is not connected
 
-        Stack<Integer> path = new Stack<Integer>();
-
-        for (int x = v; x != source; x = edgeTo[x]) {
-            path.push(x);
-        }
-        path.push(source);
-        return path;
-    }
 }

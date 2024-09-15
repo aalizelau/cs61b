@@ -2,8 +2,7 @@ package main;
 
 import edu.princeton.cs.algs4.In;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class WordNet {
     private Graph graph;
@@ -48,4 +47,43 @@ public class WordNet {
         }
         return lineCount;
     }
+
+    public static List<Integer> getSynsetIDs(Map<Integer, String[]> wordMap, String word) {
+        List<Integer> SynsetID = new ArrayList<>();
+
+        for (Map.Entry<Integer, String[]> entry : wordMap.entrySet()) {
+            for (String s : entry.getValue()){
+                if (s.equals(word)) {
+                    SynsetID.add(entry.getKey());
+                    break;
+                }
+            }
+        }
+        return SynsetID;
+    }
+
+    public Set<String> hypernym(String word){
+        List<Integer> SynsetIDs = getSynsetIDs(wordMap, word);
+
+        Set<Integer> visitedNodeID = new HashSet<>();
+        for (Integer id: SynsetIDs){
+            visitedNodeID.addAll(graph.visitedNodes(id));
+        }
+
+        Set<String> hypernym = new HashSet<>();
+        for (Integer id: visitedNodeID){
+            String[] words = wordMap.get(id);
+            if (words != null) {
+                hypernym.addAll(Arrays.asList(words));
+            }
+        }
+        return hypernym;
+    }
+
+    public List<String> sortedHypernym(Set<String> hypernym){
+        List<String> sortedHypernyms = new ArrayList<>(hypernym);
+        Collections.sort(sortedHypernyms);
+        return sortedHypernyms;
+    }
+
 }
