@@ -98,10 +98,45 @@ public class WordNet {
         return commonHyponyms;
     }
 
-    public List<String> sortedHyponym(Set<String> hypernym){
-        List<String> sortedHyponyms = new ArrayList<>(hypernym);
-        Collections.sort(sortedHyponyms);
-        return sortedHyponyms;
+    public Set<String> ancestor(String word){
+        List<Integer> SynsetIDs = getSynsetIDs(wordMap, word);
+
+        Set<Integer> visitedNodeID = new HashSet<>();
+        for (Integer id: SynsetIDs){
+            visitedNodeID.addAll(graph.findAncestors(id));
+        }
+
+        Set<String> ancestor = new HashSet<>();
+        for (Integer id: visitedNodeID){
+            String[] words = wordMap.get(id);
+            if (words != null) {
+                ancestor.addAll(Arrays.asList(words));
+            }
+        }
+        return ancestor;
+    }
+
+    public Set<String> commonAncestor(List<String> words){
+        // List to store the sets of hyponyms for each word
+        List<Set<String>> hyponymSets = new ArrayList<>();
+
+        for (String word: words){
+            Set<String> hyponyms = ancestor(word);
+            hyponymSets.add(hyponyms);
+        }
+
+        // Start with the first set and retain only the common elements
+        Set<String> commonAncestor = new HashSet<>(hyponymSets.get(0));
+        for (int i = 1; i < hyponymSets.size(); i++) {
+            commonAncestor.retainAll(hyponymSets.get(i));
+        }
+        return commonAncestor;
+    }
+
+    public List<String> sorted(Set<String> word){
+        List<String> sortedWords = new ArrayList<>(word);
+        Collections.sort(sortedWords);
+        return sortedWords;
     }
 
 }

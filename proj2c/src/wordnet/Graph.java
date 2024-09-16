@@ -4,10 +4,7 @@ import java.util.*;
 
 public class Graph {
     private final int VERTEXNO;
-    private int source;
     private List<Integer>[] adj;
-    private boolean[] marked;
-    private int[] edgeTo;
 
 
     public Graph(int vertex) {
@@ -28,10 +25,7 @@ public class Graph {
         return adj[v];
     }
 
-    public int getVERTEXNO(){
-        return VERTEXNO;
-    }
-
+    //explore the graph starting from node synsetID
     public Set<Integer> visitedNodes(int synsetID) {
         Set<Integer> visited = new HashSet<>();
         Stack<Integer> stack = new Stack<>();
@@ -48,6 +42,26 @@ public class Graph {
         }
         return visited;
     }
+
+    public Graph reverse() {
+        Graph reverseGraph = new Graph(VERTEXNO);
+        //iterating over each vertex
+        for (int v = 0; v < VERTEXNO; v++) {
+            //iterating over neighbors
+            for (int w : adj[v]) {
+                reverseGraph.addEdge(w, v);
+            }
+        }
+        return reverseGraph;
+    }
+
+    public Set<Integer> findAncestors(int synsetID) {
+        Graph reverseGraph = this.reverse();
+        return reverseGraph.visitedNodes(synsetID);
+    }
+
+
+
 
 
 

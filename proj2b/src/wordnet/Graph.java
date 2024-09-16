@@ -4,10 +4,7 @@ import java.util.*;
 
 public class Graph {
     private final int VERTEXNO;
-    private int source;
     private List<Integer>[] adj;
-    private boolean[] marked;
-    private int[] edgeTo;
 
 
     public Graph(int vertex) {
@@ -28,10 +25,7 @@ public class Graph {
         return adj[v];
     }
 
-    public int getVERTEXNO(){
-        return VERTEXNO;
-    }
-
+    //explore the graph starting from node synsetID
     public Set<Integer> visitedNodes(int synsetID) {
         Set<Integer> visited = new HashSet<>();
         Stack<Integer> stack = new Stack<>();
